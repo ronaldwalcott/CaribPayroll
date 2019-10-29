@@ -14,6 +14,8 @@
 
     <link href="/assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -150,9 +152,9 @@
 
 
                                     @*<a class="dropdown-item" href="#"> </a>
-                                    <a class="dropdown-item" href="#"> </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"> </a>*@
+                                        <a class="dropdown-item" href="#"> </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"> </a>*@
                                 </div>
                             </li>
                         </ul>
@@ -190,10 +192,13 @@
     <script src="assets/js/plugins/bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
 
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+
+    <ejs-scripts></ejs-scripts>
 </body>
 </html>

@@ -12,6 +12,7 @@ using CaribPayroll.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Syncfusion.Licensing;
 
 namespace CaribPayroll
 {
@@ -20,6 +21,8 @@ namespace CaribPayroll
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SyncfusionLicenseProvider.RegisterLicense("MTYyMjk0QDMxMzcyZTMzMmUzMExocDhuTXduT2NNeVlRVVR1d3czZExoZHAyWC9sOFpmNmN1MlkrbmtSZ2s9");
+
         }
 
         public IConfiguration Configuration { get; }

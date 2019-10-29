@@ -20,6 +20,7 @@ namespace CaribPayroll.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Test log");
             return View();
         }
 
