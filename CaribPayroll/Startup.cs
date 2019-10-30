@@ -21,7 +21,7 @@ namespace CaribPayroll
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            SyncfusionLicenseProvider.RegisterLicense("MTYyMjk0QDMxMzcyZTMzMmUzMExocDhuTXduT2NNeVlRVVR1d3czZExoZHAyWC9sOFpmNmN1MlkrbmtSZ2s9");
+           
 
         }
 
