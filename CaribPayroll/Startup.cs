@@ -13,6 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Syncfusion.Licensing;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using CaribPayroll.Constants;
+using CaribPayroll.AuthorizationHandler;
 
 namespace CaribPayroll
 {
@@ -21,7 +25,7 @@ namespace CaribPayroll
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-           
+            SyncfusionLicenseProvider.RegisterLicense("");
 
         }
 
@@ -33,10 +37,25 @@ namespace CaribPayroll
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddControllersWithViews(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyNames.ManageUsersPolicy, policy => policy.Requirements.Add(new AuthorizationNameRequirement(PolicyNames.ManageUsersPolicy)));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AuthorizationNameHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
