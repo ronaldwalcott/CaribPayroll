@@ -8,7 +8,8 @@ namespace CaribPayroll.Constants
     public static class ClaimNames
     {
         public static List<string> ClaimName = new List<string>() {
-            PolicyNames.ManageUsersPolicy
+            PolicyNames.ManageUsersPolicy,
+            PolicyNames.ManageRolesPolicy
         };
     }
 }

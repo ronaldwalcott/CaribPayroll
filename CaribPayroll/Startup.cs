@@ -40,19 +40,23 @@ namespace CaribPayroll
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
-            services.AddControllersWithViews(config =>
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+                options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+            }); 
+            //services.AddControllersWithViews(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                     .RequireAuthenticatedUser()
+            //                     .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
             services.AddRazorPages();
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(PolicyNames.ManageUsersPolicy, policy => policy.Requirements.Add(new AuthorizationNameRequirement(PolicyNames.ManageUsersPolicy)));
+                options.AddPolicy(PolicyNames.ManageRolesPolicy, policy => policy.Requirements.Add(new AuthorizationNameRequirement(PolicyNames.ManageRolesPolicy)));
             });
 
             services.AddSingleton<IAuthorizationHandler, AuthorizationNameHandler>();
@@ -82,6 +86,9 @@ namespace CaribPayroll
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "arearoute",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

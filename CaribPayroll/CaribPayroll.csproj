@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
@@ -30,10 +31,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\UserManagement\Controllers\" />
     <Folder Include="Areas\UserManagement\Data\" />
-    <Folder Include="Areas\UserManagement\Models\" />
-    <Folder Include="Areas\UserManagement\Views\" />
   </ItemGroup>
 
 </Project>
