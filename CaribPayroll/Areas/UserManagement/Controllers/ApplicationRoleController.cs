@@ -186,8 +186,7 @@ namespace CaribPayroll.Areas.UserManagement.Controllers
                                 IdentityResult claimResult = await _roleManager.AddClaimAsync(identityRole, claim);
                                 if (!claimResult.Succeeded)
                                 {
-                                    //TODO log details and display some sort of error
-
+                                    _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.addClaimFailed, roleClaim.ClaimName, identityRole, _userManager.GetUserName(User), GetDataErrors.GetErrors(claimResult));
                                 }
                             }
                             else if (!roleClaim.HasClaim && roleClaimTypeList.Contains(roleClaim.ClaimName))
@@ -196,9 +195,7 @@ namespace CaribPayroll.Areas.UserManagement.Controllers
 
                                 if (!claimResult.Succeeded)
                                 {
-
-                                    //TODO log details and display some sort of error
-
+                                    _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.removeClaimFailed, roleClaim.ClaimName, identityRole, _userManager.GetUserName(User), GetDataErrors.GetErrors(claimResult));
                                 }
                             }
                         }
