@@ -67,8 +67,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" id="register" asp-area="Identity" asp-page="/Account/Register">Create User</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" id="roles" asp-area="UserManagement" asp-controller="ApplicationRole" asp-action="Index">Role Management</a>
+                            <a class="dropdown-item" id="roles" asp-area="UserManagement" asp-controller="UserEdit" asp-action="Index">User Management</a>
                         </div>
                     </li>
                     <li class="nav-item ">

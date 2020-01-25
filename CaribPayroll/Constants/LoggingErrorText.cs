@@ -30,5 +30,18 @@ namespace CaribPayroll.Constants
         public const string addClaimFailed = "Errors generated trying to add claim name {ClaimName} to role name {RoleName} by {username} {generatedErrors}";
         public const string removeClaimFailed = "Errors generated trying to remove claim name {ClaimName} from role name {RoleName} by {username} {generatedErrors}";
 
+
+        public const string userLockSucceed = "The user account {UserInfo} has been locked by {username}";
+        public const string userLockFailed = "Errors generated trying to lock user account {UserInfo} by {username} {generatedErrors}";
+        public const string userLockPartialFailed = "Partial failure trying to lock user account {UserInfo} by {username} {generatedErrors}";
+
+        public const string userUnlockSucceed = "The user account {UserInfo} has been unlocked by {username}";
+        public const string userUnlockFailed = "Errors generated trying to unlock user account {UserInfo} by {username} {generatedErrors}";
+        public const string userUnlockPartialFailed = "Partial failure trying to unlock user account {UserInfo} by {username} {generatedErrors}";
+
+        public const string resetPasswordSucceeded = "The user account {UserInfo} password has been reset by {username}";
+        public const string resetPasswordFailed = "Errors generated trying to reset password on user account {UserInfo} by {username} {generatedErrors}";
+        public const string removePasswordFailed = "Errors generated in the remove password portion of the reset password on user account {UserInfo} by {username} {generatedErrors}";
+
     }
 }

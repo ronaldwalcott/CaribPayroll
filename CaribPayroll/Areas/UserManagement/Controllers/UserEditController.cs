@@ -275,6 +275,173 @@ namespace CaribPayroll.Areas.UserManagement.Controllers
             return View(viewModel);
         }
 
+
+        public async Task<ActionResult> LockUser(string id)
+        {
+            if (!String.IsNullOrEmpty(id)) 
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    string userInformation = string.Format("Username: {0}, Surname: {1}, Firstname: {2}, Middlename: {3}, Employeenumber: {4}  ", user.UserName, user.Surname, user.FirstName, user.MiddleName, user.EmployeeNumber);
+
+                    bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+                    if (!isLockedOut)
+                    {
+                        IdentityResult userResult = await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
+                        if (userResult.Succeeded)
+                        {
+                            IdentityResult lockoutResult = await _userManager.SetLockoutEnabledAsync(user, true);
+                            if (lockoutResult.Succeeded)
+                            {
+                                _logger.LogWarning(LoggingEvents.UserConfiguration, LoggingErrorText.userLockSucceed, userInformation, _userManager.GetUserName(User));
+                            }
+                            else
+                            {
+                                _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.userLockPartialFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(userResult));
+                                return BadRequest(InformationMessages.userLockPartialFail);
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.userLockFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(userResult));
+                            return BadRequest(InformationMessages.userLockFail);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(InformationMessages.userAlreadyLocked);
+                    }
+                }
+            }
+            return Ok();
+        }
+
+        public async Task<ActionResult> UnlockUser(string id)
+        {
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    string userInformation = string.Format("Username: {0}, Surname: {1}, Firstname: {2}, Middlename: {3}, Employeenumber: {4}  ", user.UserName, user.Surname, user.FirstName, user.MiddleName, user.EmployeeNumber);
+
+                    bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+                    if (isLockedOut)
+                    {
+                        IdentityResult userResult = await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddDays(-1));
+                        if (userResult.Succeeded)
+                        {
+                            IdentityResult resetResult = await _userManager.ResetAccessFailedCountAsync(user);
+                            IdentityResult lockoutResult = await _userManager.SetLockoutEnabledAsync(user, false);
+                            if (lockoutResult.Succeeded && resetResult.Succeeded)
+                            {
+                                _logger.LogWarning(LoggingEvents.UserConfiguration, LoggingErrorText.userUnlockSucceed, userInformation, _userManager.GetUserName(User));
+                            }
+                            else
+                            {
+                                _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.userUnlockPartialFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(userResult));
+                                return BadRequest(InformationMessages.userUnlockPartialFail);
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.userLockFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(userResult));
+                            return BadRequest(InformationMessages.userUnlockFailed);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(InformationMessages.userNotLocked);
+                    }
+                }
+            }
+            return Ok();
+        }
+
+        public async Task<ActionResult> ResetPassword(string id)
+        {
+            UserPasswordResetViewModel viewModel = new UserPasswordResetViewModel();
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    //if user is locked out user has to be unlocked before resetting password
+                    bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+                    if (isLockedOut)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    viewModel.Id = user.Id;
+                    viewModel.UserName = user.UserName;
+                    viewModel.Surname = user.Surname;
+                    viewModel.FirstName = user.FirstName;
+                    viewModel.MiddleName = user.MiddleName;
+                    viewModel.Email = user.Email;
+                    viewModel.EmployeeNumber = user.EmployeeNumber;
+                    return View(viewModel);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(string id, UserPasswordResetViewModel viewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ApplicationUser user = await _userManager.FindByIdAsync(id);
+                    if (user != null)
+                    {
+                        string userInformation = string.Format("Username: {0}, Surname: {1}, Firstname: {2}, Middlename: {3}, Employeenumber: {4}  ", user.UserName, user.Surname, user.FirstName, user.MiddleName, user.EmployeeNumber);
+                        viewModel.UserName = user.UserName;
+                        viewModel.Surname = user.Surname;
+                        viewModel.FirstName = user.FirstName;
+                        viewModel.MiddleName = user.MiddleName;
+                        viewModel.Email = user.Email;
+                        viewModel.EmployeeNumber = user.EmployeeNumber;
+
+                        IdentityResult removeResult = await _userManager.RemovePasswordAsync(user);
+                        if (removeResult.Succeeded)
+                        {
+                            IdentityResult addResult = await _userManager.AddPasswordAsync(user, viewModel.Password);
+                            if (addResult.Succeeded)
+                            {
+                                _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.resetPasswordSucceeded, userInformation, _userManager.GetUserName(User) );
+                                return RedirectToAction(nameof(Index));
+                            }
+                            else
+                            {
+                                _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.resetPasswordFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(addResult));
+                                ModelState.AddModelError(string.Empty, "There was an error trying to reset the password");
+                                ModelState.AddModelError(string.Empty, GetDataErrors.GetErrors(addResult));
+                                return View(viewModel);
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogError(LoggingEvents.UserConfiguration, LoggingErrorText.removePasswordFailed, userInformation, _userManager.GetUserName(User), GetDataErrors.GetErrors(removeResult));
+                            ModelState.AddModelError(string.Empty, "There was an error trying to reset the password");
+                            ModelState.AddModelError(string.Empty, GetDataErrors.GetErrors(removeResult));
+                            return View(viewModel);
+                        }
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                ModelState.AddModelError(string.Empty, "There was an error");
+                return View(viewModel);
+            }
+        }
     }
 
 }
