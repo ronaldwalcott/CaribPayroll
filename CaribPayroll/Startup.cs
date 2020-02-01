@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using CaribPayroll.Constants;
 using CaribPayroll.AuthorizationHandler;
+using CaribPayroll.Helpers;
 
 namespace CaribPayroll
 {
@@ -60,6 +61,7 @@ namespace CaribPayroll
             });
 
             services.AddSingleton<IAuthorizationHandler, AuthorizationNameHandler>();
+            services.AddSingleton<IDateTimeUtc, SystemDateTimeUtc>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

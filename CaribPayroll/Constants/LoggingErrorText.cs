@@ -43,5 +43,9 @@ namespace CaribPayroll.Constants
         public const string resetPasswordFailed = "Errors generated trying to reset password on user account {UserInfo} by {username} {generatedErrors}";
         public const string removePasswordFailed = "Errors generated in the remove password portion of the reset password on user account {UserInfo} by {username} {generatedErrors}";
 
+        public const string editBankFailed = "Errors generated trying to update bank information by {username} {errorMessage}";
+        public const string deleteBankFailed = "Errors generated trying to delete bank information {bankInformation} by {username} {errorMessage}";
+        public const string deleteBankSucceed = "The bank information {bankInformation} was deleted by {username}";
+
     }
 }
