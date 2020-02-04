@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace CaribPayroll.Models
 {
-    public class Department : BaseModelClass
+    public class JobListViewModel
     {
         public int Id { get; set; }
-        [StringLength(50)]
+        [StringLength(1)]
+        [Required]
+        public string JobType { get; set; }
+        [StringLength(25)]
         [Required]
         public string Description { get; set; }
-        [StringLength(25)]
-        public string GLCode { get; set; }
     }
 }

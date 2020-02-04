@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Jobs";
+}
+
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add("Add");
+    toolbarItems.Add("Edit");
+    toolbarItems.Add("Delete");
+    toolbarItems.Add("Update");
+    toolbarItems.Add("Cancel");
+}
+
+<h1>Jobs</h1>
+
+<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+    <e-grid-pagesettings pagesize="10"></e-grid-pagesettings>
+    <e-data-manager url="/Job/DataSource" insertUrl="/Job/Insert" updateUrl="/Job/Update" removeUrl="/Job/Delete" adaptor="UrlAdaptor"></e-data-manager>
+    <e-grid-columns>
+        <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Description" headerText="Job Description" type="string" width="120"></e-grid-column>
+        <e-grid-column field="JobType" headerText="Type" type="string" validationRules="@(new { maxLength = 1 })" width="120"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script type="text/javascript">
+    function complete(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>

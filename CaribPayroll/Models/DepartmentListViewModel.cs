@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CaribPayroll.Models
 {
-    public class Department : BaseModelClass
+    public class DepartmentListViewModel
     {
         public int Id { get; set; }
         [StringLength(50)]

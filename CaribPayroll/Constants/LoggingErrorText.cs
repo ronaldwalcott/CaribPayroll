@@ -47,5 +47,9 @@ namespace CaribPayroll.Constants
         public const string deleteBankFailed = "Errors generated trying to delete bank information {bankInformation} by {username} {errorMessage}";
         public const string deleteBankSucceed = "The bank information {bankInformation} was deleted by {username}";
 
+        public const string editTableFailed = "Errors generated trying to update {table} information by {username} {errorMessage}";
+        public const string deleteTableFailed = "Errors generated trying to delete {table} information {bankInformation} by {username} {errorMessage}";
+        public const string deleteTableSucceed = "The {table} information {tableInformation} was deleted by {username}";
+
     }
 }

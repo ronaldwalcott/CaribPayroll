@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace CaribPayroll.Models
 {
-    public class Department : BaseModelClass
+    public class EarningTypeListViewModel
     {
         public int Id { get; set; }
-        [StringLength(50)]
+        [StringLength(25)]
         [Required]
         public string Description { get; set; }
-        [StringLength(25)]
-        public string GLCode { get; set; }
+        //Fixed, Activity – Only these two types can exist
+        [StringLength(15)]
+        [Required]
+        public string ActivityType { get; set; }
     }
 }
