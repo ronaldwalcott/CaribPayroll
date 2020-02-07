@@ -90,12 +90,13 @@ namespace CaribPayroll.Data
               .IsUnique();
 
             modelBuilder.Entity<Employee>()
-              .HasIndex(t => new { t.Surname, t.FirstName, t.MiddleName})
+              .HasIndex(t => new { t.Surname, t.FirstName, t.MiddleName, t.EmployeeNo})
               .IsUnique();
 
             modelBuilder.Entity<Employee>()
                 .HasOne(a => a.EmployeeAddress)
                 .WithOne(e => e.Employee);
+                //.HasForeignKey<EmployeeAddress>(a => a.EmployeeId);
 
             modelBuilder.Entity<Employee>()
                 .HasMany(d => d.EmployeeDeductionReferenceNos)

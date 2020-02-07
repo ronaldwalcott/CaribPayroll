@@ -14,8 +14,8 @@ namespace CaribPayroll.Models
         public string Description { get; set; }
         [StringLength(25)]
         public string GLCode { get; set; }
-        public int DeductionTypeId { get; set; }
-        public int DeductionCalculationTypeId { get; set; }
+        public int? DeductionTypeId { get; set; }
+        public int? DeductionCalculationTypeId { get; set; }
         public bool SubCategoriesExist { get; set; }
     }
 }

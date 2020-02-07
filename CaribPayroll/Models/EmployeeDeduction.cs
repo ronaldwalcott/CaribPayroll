@@ -20,7 +20,7 @@ namespace CaribPayroll.Models
         public double DeductionBalance { get; set; }
         public DateTime? DateStartEffective { get; set; }
         public DateTime? DateEndEffective { get; set; }
-        public int BankId { get; set; }
+        public int? BankId { get; set; }
         [ForeignKey("BankId")]
         public Bank Bank { get; set; }
         [StringLength(25)]
@@ -31,7 +31,7 @@ namespace CaribPayroll.Models
         public string BankAccountNo { get; set; }
         //indicates if this is the active deduction record easier to filter on than using date start and end effective
         public bool Active { get; set; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
     }

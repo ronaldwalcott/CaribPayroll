@@ -14,6 +14,6 @@ namespace CaribPayroll.Models
         public string Description { get; set; }
         [StringLength(25)]
         public string GLCode { get; set; }
-        public int EarningTypeId { get; set; }
+        public int? EarningTypeId { get; set; }
     }
 }

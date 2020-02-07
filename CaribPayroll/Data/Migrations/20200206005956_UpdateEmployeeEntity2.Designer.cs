@@ -4,14 +4,16 @@ using CaribPayroll.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaribPayroll.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200206005956_UpdateEmployeeEntity2")]
+    partial class UpdateEmployeeEntity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,45 +190,45 @@ namespace CaribPayroll.Data.Migrations
                             Id = 1,
                             Action = "A",
                             CalculationType = "F",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 663, DateTimeKind.Unspecified).AddTicks(7007), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 792, DateTimeKind.Unspecified).AddTicks(3731), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Fixed",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 666, DateTimeKind.Unspecified).AddTicks(9990), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3274), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 2,
                             Action = "A",
                             CalculationType = "P",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(742), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3960), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Percent",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(760), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3979), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 3,
                             Action = "A",
                             CalculationType = "R",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(770), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3990), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Range",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(772), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3991), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 4,
                             Action = "A",
                             CalculationType = "S",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(774), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3994), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Scale",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(776), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3995), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 5,
                             Action = "A",
                             CalculationType = "B",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(779), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3997), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Reducing Balance",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(780), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 795, DateTimeKind.Unspecified).AddTicks(3999), new TimeSpan(0, -4, 0, 0, 0))
                         });
                 });
 
@@ -586,7 +588,7 @@ namespace CaribPayroll.Data.Migrations
 
                     b.HasIndex("PaymentPeriodId");
 
-                    b.HasIndex("Surname", "FirstName", "MiddleName", "EmployeeNo")
+                    b.HasIndex("Surname", "FirstName", "MiddleName")
                         .IsUnique();
 
                     b.ToTable("Employee");
@@ -953,18 +955,18 @@ namespace CaribPayroll.Data.Migrations
                         {
                             Id = 1,
                             Action = "A",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4908), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 796, DateTimeKind.Unspecified).AddTicks(8049), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Monthly",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4931), new TimeSpan(0, -4, 0, 0, 0)),
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 796, DateTimeKind.Unspecified).AddTicks(8062), new TimeSpan(0, -4, 0, 0, 0)),
                             PaymentCode = "M"
                         },
                         new
                         {
                             Id = 2,
                             Action = "A",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4982), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 796, DateTimeKind.Unspecified).AddTicks(8109), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Weekly",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4985), new TimeSpan(0, -4, 0, 0, 0)),
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 20, 59, 55, 796, DateTimeKind.Unspecified).AddTicks(8111), new TimeSpan(0, -4, 0, 0, 0)),
                             PaymentCode = "W"
                         });
                 });

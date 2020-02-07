@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaribPayroll.Models
 {
-    public class Employee : BaseModelClass
+    public class EmployeeListViewModel
     {
         public int Id { get; set; }
         [StringLength(25)]
@@ -26,16 +25,8 @@ namespace CaribPayroll.Models
         [Required]
         public string NationalRegistrationNo { get; set; }
         public int? PaymentPeriodId { get; set; }
-        [ForeignKey("PaymentPeriodId")]
-        public PaymentPeriod PaymentPeriod { get; set; }
         public int? EmployeeAddressId { get; set; }
-        [ForeignKey("EmployeeAddressId")]
-        public EmployeeAddress EmployeeAddress { get; set; }
         public int? DepartmentId { get; set; }
-        [ForeignKey("DepartmentId")]
-        public Department Department { get; set; }
-        public ICollection<EmployeeDeductionReferenceNo> EmployeeDeductionReferenceNos { get; set; }
-        public ICollection<EmployeeEarning> EmployeeEarnings { get; set; }
-        public ICollection<EmployeeDeduction> EmployeeDeductions { get; set; }
+
     }
 }

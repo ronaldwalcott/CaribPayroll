@@ -62,6 +62,7 @@ namespace CaribPayroll
 
             services.AddSingleton<IAuthorizationHandler, AuthorizationNameHandler>();
             services.AddSingleton<IDateTimeUtc, SystemDateTimeUtc>();
+            services.AddTransient<TableLookup>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

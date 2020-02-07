@@ -69,7 +69,7 @@ namespace CaribPayroll.Controllers
 
             List<string> selectedFields = new List<string> { };
 
-            selectedFields = new List<string> { "Id", "Description", "GLCode", "DeductionDescriptionId", "DeductionCalculationTypeId", "SubCategoriesExist" };
+            selectedFields = new List<string> { "Id", "Description", "GLCode", "DeductionTypeId", "DeductionCalculationTypeId", "SubCategoriesExist" };
 
             data = operation.PerformSelect(data, selectedFields);
 

@@ -4,14 +4,16 @@ using CaribPayroll.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaribPayroll.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200206032038_UpdateEmployeeEntity3")]
+    partial class UpdateEmployeeEntity3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,45 +190,45 @@ namespace CaribPayroll.Data.Migrations
                             Id = 1,
                             Action = "A",
                             CalculationType = "F",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 663, DateTimeKind.Unspecified).AddTicks(7007), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 237, DateTimeKind.Unspecified).AddTicks(4619), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Fixed",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 666, DateTimeKind.Unspecified).AddTicks(9990), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 239, DateTimeKind.Unspecified).AddTicks(9577), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 2,
                             Action = "A",
                             CalculationType = "P",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(742), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(299), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Percent",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(760), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(318), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 3,
                             Action = "A",
                             CalculationType = "R",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(770), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(329), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Range",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(772), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(331), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 4,
                             Action = "A",
                             CalculationType = "S",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(774), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(333), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Scale",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(776), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(335), new TimeSpan(0, -4, 0, 0, 0))
                         },
                         new
                         {
                             Id = 5,
                             Action = "A",
                             CalculationType = "B",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(779), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(337), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Reducing Balance",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 667, DateTimeKind.Unspecified).AddTicks(780), new TimeSpan(0, -4, 0, 0, 0))
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 240, DateTimeKind.Unspecified).AddTicks(339), new TimeSpan(0, -4, 0, 0, 0))
                         });
                 });
 
@@ -580,13 +582,9 @@ namespace CaribPayroll.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("EmployeeAddressId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeAddressId] IS NOT NULL");
-
                     b.HasIndex("PaymentPeriodId");
 
-                    b.HasIndex("Surname", "FirstName", "MiddleName", "EmployeeNo")
+                    b.HasIndex("Surname", "FirstName", "MiddleName")
                         .IsUnique();
 
                     b.ToTable("Employee");
@@ -642,6 +640,10 @@ namespace CaribPayroll.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictId");
+
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.HasIndex("ParishId");
 
@@ -953,18 +955,18 @@ namespace CaribPayroll.Data.Migrations
                         {
                             Id = 1,
                             Action = "A",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4908), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 241, DateTimeKind.Unspecified).AddTicks(5335), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Monthly",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4931), new TimeSpan(0, -4, 0, 0, 0)),
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 241, DateTimeKind.Unspecified).AddTicks(5349), new TimeSpan(0, -4, 0, 0, 0)),
                             PaymentCode = "M"
                         },
                         new
                         {
                             Id = 2,
                             Action = "A",
-                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4982), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 241, DateTimeKind.Unspecified).AddTicks(5397), new TimeSpan(0, -4, 0, 0, 0)),
                             Description = "Weekly",
-                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 6, 23, 54, 19, 668, DateTimeKind.Unspecified).AddTicks(4985), new TimeSpan(0, -4, 0, 0, 0)),
+                            ModifiedDate = new DateTimeOffset(new DateTime(2020, 2, 5, 23, 20, 38, 241, DateTimeKind.Unspecified).AddTicks(5399), new TimeSpan(0, -4, 0, 0, 0)),
                             PaymentCode = "W"
                         });
                 });
@@ -1128,10 +1130,6 @@ namespace CaribPayroll.Data.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("CaribPayroll.Models.EmployeeAddress", "EmployeeAddress")
-                        .WithOne("Employee")
-                        .HasForeignKey("CaribPayroll.Models.Employee", "EmployeeAddressId");
-
                     b.HasOne("CaribPayroll.Models.PaymentPeriod", "PaymentPeriod")
                         .WithMany()
                         .HasForeignKey("PaymentPeriodId");
@@ -1142,6 +1140,10 @@ namespace CaribPayroll.Data.Migrations
                     b.HasOne("CaribPayroll.Models.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
+
+                    b.HasOne("CaribPayroll.Models.Employee", "Employee")
+                        .WithOne("EmployeeAddress")
+                        .HasForeignKey("CaribPayroll.Models.EmployeeAddress", "EmployeeId");
 
                     b.HasOne("CaribPayroll.Models.Parish", "Parish")
                         .WithMany()

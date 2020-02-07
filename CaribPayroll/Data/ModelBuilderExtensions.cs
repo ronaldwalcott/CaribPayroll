@@ -13,7 +13,7 @@ namespace CaribPayroll.Data
         {
             modelBuilder.Entity<DeductionCalculationType>().HasData(
                 new DeductionCalculationType { Id = 1, CalculationType = "F", Description = "Fixed", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now },
-                new DeductionCalculationType { Id = 2, CalculationType = "P", Description = "Fixed", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now },
+                new DeductionCalculationType { Id = 2, CalculationType = "P", Description = "Percent", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now },
                 new DeductionCalculationType { Id = 3, CalculationType = "R", Description = "Range", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now },
                 new DeductionCalculationType { Id = 4, CalculationType = "S", Description = "Scale", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now },
                 new DeductionCalculationType { Id = 5, CalculationType = "B", Description = "Reducing Balance", Action = "A", CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now }

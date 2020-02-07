@@ -1,0 +1,46 @@
+﻿@inject CaribPayroll.Helpers.TableLookup LookUpOptions
+@{
+    ViewData["Title"] = "Employees";
+}
+
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add("Add");
+    toolbarItems.Add("Edit");
+    toolbarItems.Add("Delete");
+    toolbarItems.Add("Update");
+    toolbarItems.Add("Cancel");
+}
+
+<h1>Employees</h1>
+
+<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+    <e-grid-pagesettings pagesize="10"></e-grid-pagesettings>
+    <e-data-manager url="/Employee/DataSource" insertUrl="/Employee/Insert" updateUrl="/Employee/Update" removeUrl="/Employee/Delete" adaptor="UrlAdaptor"></e-data-manager>
+    <e-grid-columns>
+        <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="EmployeeNo" headerText="Employee No" type="string" width="120"></e-grid-column>
+        <e-grid-column field="Surname" headerText="Surname" type="string" width="120"></e-grid-column>
+        <e-grid-column field="FirstName" headerText="First name" type="string" width="120"></e-grid-column>
+        <e-grid-column field="MiddleName" headerText="Middle name" type="string" width="120"></e-grid-column>
+        <e-grid-column field="NationalRegistrationNo" headerText="National Reg No" type="string" width="120"></e-grid-column>
+        <e-grid-column field="PaymentPeriodId" headerText="Payment Period" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetPaymentPeriods() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="DepartmentId" headerText="Department" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetDepartments() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="AddressLine1" headerText="Address Line 1" type="string" width="0" allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="AddressLine2" headerText="Address Line 2" type="string" width="0"></e-grid-column>
+        <e-grid-column field="DistrictId" headerText="District" width="0" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetDistricts() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="ParishId" headerText="Parish" width="0" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetParishes() allowSorting="false" allowFiltering="false"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script type="text/javascript">
+    function complete(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>
