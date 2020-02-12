@@ -10,11 +10,13 @@
     toolbarItems.Add("Delete");
     toolbarItems.Add("Update");
     toolbarItems.Add("Cancel");
+    toolbarItems.Add(new { text = "Earnings", tooltipText = "Earnings", prefixIcon = "e-claim-icon", id = "Earnings" });
+    toolbarItems.Add(new { text = "Deductions", tooltipText = "Deductions", prefixIcon = "e-claim-icon", id = "Deductions" });
 }
 
 <h1>Employees</h1>
 
-<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems>
+<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems toolbarClick="toolbarClick" rowSelected="onRowSelected">
     <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
     <e-grid-pagesettings pagesize="10"></e-grid-pagesettings>
     <e-data-manager url="/Employee/DataSource" insertUrl="/Employee/Insert" updateUrl="/Employee/Update" removeUrl="/Employee/Delete" adaptor="UrlAdaptor"></e-data-manager>
@@ -34,6 +36,12 @@
     </e-grid-columns>
 </ejs-grid>
 
+<div id="container" style="height:400px;">
+    <ejs-dialog id="dialog" isModal="true" showCloseIcon="true" overlayClick="onOverlayClick" header="Please select an employee first" visible="false" target="#container" width="300px"></ejs-dialog>
+</div>
+
+<input type="hidden" id="EmployeeSelection" value="" />
+
 <script type="text/javascript">
     function complete(args) {
         if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
@@ -42,5 +50,42 @@
             dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
         }
     }
+
+    function toolbarClick(args) {
+        console.log("test1");
+           if (args.item.id === 'Earnings' || args.item.id === 'Deductions') {
+
+               var gridObj = document.getElementById("Grid").ej2_instances[0];
+               var theId = $("#EmployeeSelection").val();
+        console.log("test2" + theId);
+
+               if (theId === '' || theId === null || theId === undefined) {
+                   var dialog = document.getElementById("dialog").ej2_instances[0];
+                   dialog.show();
+               }
+               else {
+                   if (args.item.id === 'Earnings') {
+                        window.location.href = '@Url.Action("ManageEarning", "Employee")' + "/" + theId;
+                   }
+                   else {
+                        window.location.href = '@Url.Action("ManageDeduction", "Employee")' + "/" + theId;
+                   }
+               }
+           }
+    }
+
+    function onRowSelected(args) {
+        //Retrieve the selected records of the grid
+        var result = this.getSelectedRecords();
+        //place the id of the grid`s selected record as value of hidden element
+        $("#EmployeeSelection").val(result[0].Id);
+    }
+
+    function onOverlayClick() {
+        var dialog = document.getElementById("dialog").ej2_instances[0];
+        dialog.hide();
+    }
+
+
 
 </script>

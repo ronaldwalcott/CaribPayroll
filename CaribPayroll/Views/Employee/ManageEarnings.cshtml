@@ -1,0 +1,44 @@
+﻿@inject CaribPayroll.Helpers.TableLookup LookUpOptions
+
+@{
+    ViewData["Title"] = "Earnings";
+}
+
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add("Add");
+    toolbarItems.Add("Edit");
+    toolbarItems.Add("Delete");
+    toolbarItems.Add("Update");
+    toolbarItems.Add("Cancel");
+}
+
+<h1> Earnings </h1>
+<h2>@ViewData["EmployeeName"] </h2>
+
+<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems query="new ej.data.Query().addParams('EmployeeID', @Convert.ToInt32(ViewData["EmployeeId"]))">
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+    <e-grid-pagesettings pagesize="10"></e-grid-pagesettings>
+    <e-data-manager url="/Employee/EarningDataSource" insertUrl="/Employee/EarningInsert" updateUrl="/Employee/EarningUpdate" removeUrl="/Employee/EarningDelete" adaptor="UrlAdaptor"></e-data-manager>
+    <e-grid-columns>
+        <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Description" headerText="Description" type="string" width="120"></e-grid-column>
+        <e-grid-column field="EarningDescriptionId" headerText="Earning" width="120" validationRules="@(new { required= true })" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetEarningDescriptions() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="JobId" headerText="Job" width="120" validationRules="@(new { required= true })" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetJobs() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="EarningAmount" headerText="Amount" format="C2" defaultValue="0" editType="numericedit" width="120"></e-grid-column>
+        <e-grid-column field="DateStartEffective" headerText="Start Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+        <e-grid-column field="DateEndEffective" headerText="End Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+        <e-grid-column field="Active" headerText="Active" editType="booleanedit" displayAsCheckBox="true" width="120"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script type="text/javascript">
+    function complete(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>

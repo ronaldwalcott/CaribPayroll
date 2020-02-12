@@ -1,0 +1,50 @@
+﻿@inject CaribPayroll.Helpers.TableLookup LookUpOptions
+
+@{
+    ViewData["Title"] = "Deductions";
+}
+
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add("Add");
+    toolbarItems.Add("Edit");
+    toolbarItems.Add("Delete");
+    toolbarItems.Add("Update");
+    toolbarItems.Add("Cancel");
+}
+
+<h1>Deductions</h1>
+<h2>@ViewData["EmployeeName"] </h2>
+
+
+<ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems query="new ej.data.Query().addParams('EmployeeID', @Convert.ToInt32(ViewData["EmployeeId"]))">
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+    <e-grid-pagesettings pagesize="10"></e-grid-pagesettings>
+    <e-data-manager url="/Employee/DeductionDataSource" insertUrl="/Employee/DeductionInsert" updateUrl="/Employee/DeductionUpdate" removeUrl="/Employee/DeductionDelete" adaptor="UrlAdaptor"></e-data-manager>
+    <e-grid-columns>
+        <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Description" headerText="Description" type="string" width="120"></e-grid-column>
+        <e-grid-column field="DeductionDescriptionId" headerText="Deduction" width="120" foreignKeyField="Id" foreignKeyValue="Description" validationRules="@(new { required= true })" dataSource=@LookUpOptions.GetDeductionDescriptions() allowSorting="false" allowFiltering="false"></e-grid-column>
+
+        <e-grid-column field="DeductionAmount" headerText="Amount" format="C2" editType="numericedit" defaultValue="0" width="120"></e-grid-column>
+        <e-grid-column field="DeductionBalance" headerText="Balance" format="C2" editType="numericedit" defaultValue="0" width="120"></e-grid-column>
+        <e-grid-column field="BankId" headerText="Bank" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetBanks() allowSorting="false" allowFiltering="false"></e-grid-column>
+        <e-grid-column field="BranchCode" headerText="Branch" type="string" width="120"></e-grid-column>
+        <e-grid-column field="BankAccountNo" headerText="Account No" type="string" width="120"></e-grid-column>
+
+        <e-grid-column field="DateStartEffective" headerText="Start Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+        <e-grid-column field="DateEndEffective" headerText="End Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+        <e-grid-column field="Active" headerText="Active" editType="booleanedit" displayAsCheckBox="true" width="120"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script type="text/javascript">
+    function complete(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>

@@ -69,6 +69,29 @@ namespace CaribPayroll.Helpers
             return genericList;
         }
 
+        public List<DescriptionLookup> GetEarningDescriptions()
+        {
+            var genericList = _context.EarningDescriptions.Select(c => new DescriptionLookup { Id = c.Id, Description = c.Description }).ToList();
+            return genericList;
+        }
+
+        public List<DescriptionLookup> GetJobs()
+        {
+            var genericList = _context.Jobs.Select(c => new DescriptionLookup { Id = c.Id, Description = c.Description }).ToList();
+            return genericList;
+        }
+
+        public List<DescriptionLookup> GetDeductionDescriptions()
+        {
+            var genericList = _context.DeductionDescriptions.Select(c => new DescriptionLookup { Id = c.Id, Description = c.Description }).ToList();
+            return genericList;
+        }
+
+        public List<DescriptionLookup> GetBanks()
+        {
+            var genericList = _context.Banks.Select(c => new DescriptionLookup { Id = c.Id, Description = c.Description }).ToList();
+            return genericList;
+        }
 
     }
 }
