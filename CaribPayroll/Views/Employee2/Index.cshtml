@@ -1,0 +1,274 @@
+﻿@inject CaribPayroll.Helpers.TableLookup LookUpOptions
+@{
+    ViewData["Title"] = "Employees";
+}
+
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add("Add");
+    toolbarItems.Add("Edit");
+    toolbarItems.Add("Delete");
+    toolbarItems.Add("Update");
+    toolbarItems.Add("Cancel");
+}
+
+@{
+    List<object> toolbarItemsEarnings = new List<object>();
+    toolbarItemsEarnings.Add("Add");
+    toolbarItemsEarnings.Add("Edit");
+    toolbarItemsEarnings.Add("Delete");
+    toolbarItemsEarnings.Add("Update");
+    toolbarItemsEarnings.Add("Cancel");
+}
+
+@{
+    List<object> toolbarItemsDeductions = new List<object>();
+    toolbarItemsDeductions.Add("Add");
+    toolbarItemsDeductions.Add("Edit");
+    toolbarItemsDeductions.Add("Delete");
+    toolbarItemsDeductions.Add("Update");
+    toolbarItemsDeductions.Add("Cancel");
+}
+
+
+
+
+
+<h1>Employees Single View</h1>
+
+
+<div>
+
+
+    <div class="row control-section">
+        <div class="col-lg-12">
+            <ejs-grid id="Grid" allowPaging="true" allowSorting="true" actionComplete="complete" toolbar=toolbarItems toolbarClick="toolbarClick" rowSelected="onRowSelected">
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+                <e-grid-pagesettings pagesize="5"></e-grid-pagesettings>
+                <e-data-manager url="/Employee2/DataSource" insertUrl="/Employee2/Insert" updateUrl="/Employee2/Update" removeUrl="/Employee2/Delete" adaptor="UrlAdaptor"></e-data-manager>
+                <e-grid-columns>
+                    <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+                    <e-grid-column field="EmployeeNo" headerText="Employee No" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="Surname" headerText="Surname" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="FirstName" headerText="First name" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="MiddleName" headerText="Middle name" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="NationalRegistrationNo" headerText="National Reg No" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="PaymentPeriodId" headerText="Payment Period" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetPaymentPeriods() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="DepartmentId" headerText="Department" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetDepartments() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="AddressLine1" headerText="Address Line 1" type="string" width="0" allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="AddressLine2" headerText="Address Line 2" type="string" width="0"></e-grid-column>
+                    <e-grid-column field="DistrictId" headerText="District" width="0" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetDistricts() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="ParishId" headerText="Parish" width="0" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetParishes() allowSorting="false" allowFiltering="false"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <h4>Earnings</h4>
+            <ejs-grid id="EarningsGrid" allowPaging="true" allowSorting="true" actionComplete="completeEarnings" beforeDataBound="beforeDataBoundEarnings" toolbar=toolbarItemsEarnings toolbarClick="toolbarClickEarnings">
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+                <e-grid-pagesettings pagesize="5"></e-grid-pagesettings>
+                <e-data-manager url="/Employee2/EarningDataSource" insertUrl="/Employee2/EarningInsert" updateUrl="/Employee2/EarningUpdate" removeUrl="/Employee2/EarningDelete" adaptor="UrlAdaptor"></e-data-manager>
+                <e-grid-columns>
+                    <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+                    <e-grid-column field="Description" headerText="Description" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="EarningDescriptionId" headerText="Earning" width="120" validationRules="@(new { required= true })" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetEarningDescriptions() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="JobId" headerText="Job" width="120" validationRules="@(new { required= true })" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetJobs() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="EarningAmount" headerText="Amount" type="number" format="C2" defaultValue="0" editType="numericedit" width="120"></e-grid-column>
+                    <e-grid-column field="DateStartEffective" headerText="Start Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+                    <e-grid-column field="DateEndEffective" headerText="End Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+                    <e-grid-column field="Active" headerText="Active" type="boolean" editType="booleanedit" displayAsCheckBox="true" width="120"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <h4>Deductions</h4>
+
+            @*<ejs-grid id="DeductionsGrid" allowPaging="true" allowSorting="true" actionComplete="completeDeductions" toolbar=toolbarItemsDeductions query="new ej.data.Query().addParams('EmployeeID', @Convert.ToInt32(ViewData["EmployeeId"]))">*@
+            <ejs-grid id="DeductionsGrid" allowPaging="true" allowSorting="true" actionComplete="completeDeductions" beforeDataBound="beforeDataBoundDeductions" toolbar=toolbarItemsDeductions toolbarClick="toolbarClickDeductions">
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+                <e-grid-pagesettings pagesize="5"></e-grid-pagesettings>
+                <e-data-manager url="/Employee2/DeductionDataSource" insertUrl="/Employee2/DeductionInsert" updateUrl="/Employee2/DeductionUpdate" removeUrl="/Employee2/DeductionDelete" adaptor="UrlAdaptor"></e-data-manager>
+                <e-grid-columns>
+                    <e-grid-column field="Id" headerText="ID" isPrimaryKey="true" visible="false"></e-grid-column>
+                    <e-grid-column field="Description" headerText="Description" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="DeductionDescriptionId" headerText="Deduction" width="120" foreignKeyField="Id" foreignKeyValue="Description" validationRules="@(new { required= true })" dataSource=@LookUpOptions.GetDeductionDescriptions() allowSorting="false" allowFiltering="false"></e-grid-column>
+
+                    <e-grid-column field="DeductionAmount" headerText="Amount" type="number" format="C2" editType="numericedit" defaultValue="0" width="120"></e-grid-column>
+                    <e-grid-column field="DeductionBalance" headerText="Balance" type="number" format="C2" editType="numericedit" defaultValue="0" width="120"></e-grid-column>
+                    <e-grid-column field="BankId" headerText="Bank" width="120" foreignKeyField="Id" foreignKeyValue="Description" dataSource=@LookUpOptions.GetBanks() allowSorting="false" allowFiltering="false"></e-grid-column>
+                    <e-grid-column field="BranchCode" headerText="Branch" type="string" width="120"></e-grid-column>
+                    <e-grid-column field="BankAccountNo" headerText="Account No" type="string" width="120"></e-grid-column>
+
+                    <e-grid-column field="DateStartEffective" headerText="Start Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+                    <e-grid-column field="DateEndEffective" headerText="End Effective" edittype="datepickeredit" customFormat="@(new { type ="date", format="dd/MMM/yyyy" })" type="date" width="120"></e-grid-column>
+                    <e-grid-column field="Active" headerText="Active" type="boolean" editType="booleanedit" displayAsCheckBox="true" width="120"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+
+
+        </div>
+
+    </div>
+</div>
+@*<div id="container" style="height:100px;">
+    <ejs-dialog id="dialog" isModal="true" showCloseIcon="true" overlayClick="onOverlayClick" header="Please select an employee first" visible="false" target="#container" width="300px"></ejs-dialog>
+</div>*@
+
+
+<input type="hidden" id="EmployeeSelection" value="" />
+
+<script type="text/javascript">
+    function resetChildren() {
+        var gridEarning = document.getElementById("EarningsGrid").ej2_instances[0];
+        var gridDeduction = document.getElementById("DeductionsGrid").ej2_instances[0];
+
+        gridEarning.query = new ej.data.Query().addParams('EmployeeID', $("#EmployeeSelection").val());
+        gridDeduction.query = new ej.data.Query().addParams('EmployeeID', $("#EmployeeSelection").val());
+
+        gridEarning.refresh();
+        gridDeduction.refresh();
+    }
+
+
+
+    function complete(args) {
+        console.log("complete executed " + args.requestType);
+        if (args.requestType === 'paging') {
+            $("#EmployeeSelection").val(0);
+            resetChildren();
+        }
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+    function toolbarClick(args) {
+            console.log("toolbar selected " + args.item.id);
+
+
+        if (args.item.id === 'Grid_add') {
+            console.log("add selected");
+            resetChildren();
+        }
+
+        console.log("test1");
+           if (args.item.id === 'Earnings' || args.item.id === 'Deductions') {
+
+               var gridObj = document.getElementById("Grid").ej2_instances[0];
+               var theId = $("#EmployeeSelection").val();
+        console.log("test2" + theId);
+
+               if (theId === '' || theId === null || theId === undefined) {
+                   var dialog = document.getElementById("dialog").ej2_instances[0];
+                   dialog.show();
+               }
+               else {
+                   if (args.item.id === 'Earnings') {
+                        window.location.href = '@Url.Action("ManageEarning", "Employee")' + "/" + theId;
+                   }
+                   else {
+                        window.location.href = '@Url.Action("ManageDeduction", "Employee")' + "/" + theId;
+                   }
+               }
+           }
+    }
+
+    function onRowSelected(args) {
+        //Retrieve the selected records of the grid
+        var result = this.getSelectedRecords();
+        //place the id of the grid`s selected record as value of hidden element
+        $("#EmployeeSelection").val(result[0].Id);
+        var gridEarning = document.getElementById("EarningsGrid").ej2_instances[0];
+        var gridDeduction = document.getElementById("DeductionsGrid").ej2_instances[0];
+
+        //var query = new ej.Query().addParams("EmployeeID", value);
+
+        gridEarning.query = new ej.data.Query().addParams('EmployeeID', $("#EmployeeSelection").val());
+        gridDeduction.query = new ej.data.Query().addParams('EmployeeID', $("#EmployeeSelection").val());
+
+        gridEarning.refresh();
+        gridDeduction.refresh();
+
+    }
+
+    function onOverlayClick() {
+        var dialog = document.getElementById("dialog").ej2_instances[0];
+        dialog.hide();
+    }
+
+
+    function beforeDataBoundEarnings(args) {
+        var gridObj = document.getElementById("EarningsGrid").ej2_instances[0];
+        //console.log(gridObj);
+        //gridObj.toolbarModule.enableItems(['Add','add'], false);
+
+        if (args.count > 0) {
+            var data = gridObj.toolbar.indexOf('Add');           
+            gridObj.toolbarModule.toolbar.hideItem(data, false); 
+
+        }
+        else {
+            var data = gridObj.toolbar.indexOf('Add');           
+            gridObj.toolbarModule.toolbar.hideItem(data, true); 
+        }
+    }
+
+    function beforeDataBoundDeductions(args) {
+        var gridObj = document.getElementById("DeductionsGrid").ej2_instances[0];
+        //console.log(gridObj);
+        //gridObj.toolbarModule.enableItems(['Add','add'], false);
+
+        if (args.count > 0) {
+            var data = gridObj.toolbar.indexOf('Add');           
+            gridObj.toolbarModule.toolbar.hideItem(data, false); 
+
+        }
+        else {
+            var data = gridObj.toolbar.indexOf('Add');           
+            gridObj.toolbarModule.toolbar.hideItem(data, true); 
+        }
+    }
+
+
+
+    function toolbarClickEarnings(args) {
+        if (args.item.id === 'EarningsGrid_add' && $("#EmployeeSelection").val() === 0) {
+
+        }
+
+    }
+
+    function toolbarClickDeductions(args) {
+
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    function completeEarnings(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+    function completeDeductions(args) {
+        if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+            let dialog = args.dialog;
+            // change the header of the dialog
+            dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+        }
+    }
+
+</script>
